@@ -18,6 +18,39 @@ themeButton.addEventListener("click", function () {
   localStorage.setItem("portfolio-theme", nextTheme);
 });
 
+const aboutToggle = document.getElementById("about-toggle");
+const aboutSection = document.getElementById("about");
+const aboutClose = document.getElementById("about-close");
+const aboutNavLink = document.querySelector('.nav-links a[href="#about"]');
+
+function setAboutVisible(isVisible, shouldScroll) {
+  aboutSection.hidden = !isVisible;
+  aboutToggle.setAttribute("aria-expanded", String(isVisible));
+  aboutToggle.textContent = isVisible ? "Hide About Me" : "About Me";
+
+  if (isVisible && shouldScroll) {
+    aboutSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+aboutToggle.addEventListener("click", function () {
+  const shouldShowAbout = aboutSection.hidden;
+  setAboutVisible(shouldShowAbout, shouldShowAbout);
+
+  if (!shouldShowAbout) {
+    aboutToggle.focus();
+  }
+});
+
+aboutClose.addEventListener("click", function () {
+  setAboutVisible(false, false);
+  aboutToggle.focus();
+});
+
+aboutNavLink.addEventListener("click", function () {
+  setAboutVisible(true, false);
+});
+
 const projectFilters = document.querySelectorAll(".project-filter");
 const projectCards = document.querySelectorAll(".project-card");
 
